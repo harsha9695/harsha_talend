@@ -1,0 +1,13 @@
+**/jobInfo.properties
+.JETEmitters/
+.Java/
+.metadata/
+HARSHA_TALEND/code/routines/system/*.*
+HARSHA_TALEND/metadata/
+temp/
+sqlPatterns/
+.settings
+poms/
+HARSHA_TALEND/talend.project
+HARSHA_TALEND/.project
+
