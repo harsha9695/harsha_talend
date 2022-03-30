@@ -346,6 +346,30 @@ public class harsha_first implements TalendJob {
 				globalMap);
 	}
 
+	public void tFileInputDelimited_4_error(Exception exception,
+			String errorComponent, final java.util.Map<String, Object> globalMap)
+			throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputDelimited_4_onSubJobError(exception, errorComponent,
+				globalMap);
+	}
+
+	public void tLogRow_4_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap)
+			throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputDelimited_4_onSubJobError(exception, errorComponent,
+				globalMap);
+	}
+
 	public void tFileInputDelimited_1_onSubJobError(Exception exception,
 			String errorComponent, final java.util.Map<String, Object> globalMap)
 			throws TalendException {
@@ -369,6 +393,17 @@ public class harsha_first implements TalendJob {
 	}
 
 	public void tFileInputDelimited_3_onSubJobError(Exception exception,
+			String errorComponent, final java.util.Map<String, Object> globalMap)
+			throws TalendException {
+
+		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread
+				.currentThread().getId() + "", "FATAL", "",
+				exception.getMessage(),
+				ResumeUtil.getExceptionStackTrace(exception), "");
+
+	}
+
+	public void tFileInputDelimited_4_onSubJobError(Exception exception,
 			String errorComponent, final java.util.Map<String, Object> globalMap)
 			throws TalendException {
 
@@ -2314,6 +2349,651 @@ public class harsha_first implements TalendJob {
 		globalMap.put("tFileInputDelimited_3_SUBPROCESS_STATE", 1);
 	}
 
+	public static class row4Struct implements
+			routines.system.IPersistableRow<row4Struct> {
+		final static byte[] commonByteArrayLock_HARSHA_TALEND_harsha_first = new byte[0];
+		static byte[] commonByteArray_HARSHA_TALEND_harsha_first = new byte[0];
+
+		public String Column0;
+
+		public String getColumn0() {
+			return this.Column0;
+		}
+
+		public Integer Column1;
+
+		public Integer getColumn1() {
+			return this.Column1;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_HARSHA_TALEND_harsha_first.length) {
+					if (length < 1024
+							&& commonByteArray_HARSHA_TALEND_harsha_first.length == 0) {
+						commonByteArray_HARSHA_TALEND_harsha_first = new byte[1024];
+					} else {
+						commonByteArray_HARSHA_TALEND_harsha_first = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_HARSHA_TALEND_harsha_first, 0,
+						length);
+				strReturn = new String(
+						commonByteArray_HARSHA_TALEND_harsha_first, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos)
+				throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		private Integer readInteger(ObjectInputStream dis) throws IOException {
+			Integer intReturn;
+			int length = 0;
+			length = dis.readByte();
+			if (length == -1) {
+				intReturn = null;
+			} else {
+				intReturn = dis.readInt();
+			}
+			return intReturn;
+		}
+
+		private void writeInteger(Integer intNum, ObjectOutputStream dos)
+				throws IOException {
+			if (intNum == null) {
+				dos.writeByte(-1);
+			} else {
+				dos.writeByte(0);
+				dos.writeInt(intNum);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_HARSHA_TALEND_harsha_first) {
+
+				try {
+
+					int length = 0;
+
+					this.Column0 = readString(dis);
+
+					this.Column1 = readInteger(dis);
+
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+
+				}
+
+			}
+
+		}
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.Column0, dos);
+
+				// Integer
+
+				writeInteger(this.Column1, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("Column0=" + Column0);
+			sb.append(",Column1=" + String.valueOf(Column1));
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row4Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(),
+						object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
+	}
+
+	public void tFileInputDelimited_4Process(
+			final java.util.Map<String, Object> globalMap)
+			throws TalendException {
+		globalMap.put("tFileInputDelimited_4_SUBPROCESS_STATE", 0);
+
+		final boolean execStat = this.execStat;
+
+		String iterateId = "";
+
+		String currentComponent = "";
+		java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+		try {
+			// TDI-39566 avoid throwing an useless Exception
+			boolean resumeIt = true;
+			if (globalResumeTicket == false && resumeEntryMethodName != null) {
+				String currentMethodName = new java.lang.Exception()
+						.getStackTrace()[0].getMethodName();
+				resumeIt = resumeEntryMethodName.equals(currentMethodName);
+			}
+			if (resumeIt || globalResumeTicket) { // start the resume
+				globalResumeTicket = true;
+
+				row4Struct row4 = new row4Struct();
+
+				/**
+				 * [tLogRow_4 begin ] start
+				 */
+
+				ok_Hash.put("tLogRow_4", false);
+				start_Hash.put("tLogRow_4", System.currentTimeMillis());
+
+				currentComponent = "tLogRow_4";
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						runStat.updateStatOnConnection("row4" + iterateId, 0, 0);
+
+					}
+				}
+
+				int tos_count_tLogRow_4 = 0;
+
+				// /////////////////////
+
+				class Util_tLogRow_4 {
+
+					String[] des_top = { ".", ".", "-", "+" };
+
+					String[] des_head = { "|=", "=|", "-", "+" };
+
+					String[] des_bottom = { "'", "'", "-", "+" };
+
+					String name = "";
+
+					java.util.List<String[]> list = new java.util.ArrayList<String[]>();
+
+					int[] colLengths = new int[2];
+
+					public void addRow(String[] row) {
+
+						for (int i = 0; i < 2; i++) {
+							if (row[i] != null) {
+								colLengths[i] = Math.max(colLengths[i],
+										row[i].length());
+							}
+						}
+						list.add(row);
+					}
+
+					public void setTableName(String name) {
+
+						this.name = name;
+					}
+
+					public StringBuilder format() {
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(print(des_top));
+
+						int totals = 0;
+						for (int i = 0; i < colLengths.length; i++) {
+							totals = totals + colLengths[i];
+						}
+
+						// name
+						sb.append("|");
+						int k = 0;
+						for (k = 0; k < (totals + 1 - name.length()) / 2; k++) {
+							sb.append(' ');
+						}
+						sb.append(name);
+						for (int i = 0; i < totals + 1 - name.length() - k; i++) {
+							sb.append(' ');
+						}
+						sb.append("|\n");
+
+						// head and rows
+						sb.append(print(des_head));
+						for (int i = 0; i < list.size(); i++) {
+
+							String[] row = list.get(i);
+
+							java.util.Formatter formatter = new java.util.Formatter(
+									new StringBuilder());
+
+							StringBuilder sbformat = new StringBuilder();
+							sbformat.append("|%1$-");
+							sbformat.append(colLengths[0]);
+							sbformat.append("s");
+
+							sbformat.append("|%2$-");
+							sbformat.append(colLengths[1]);
+							sbformat.append("s");
+
+							sbformat.append("|\n");
+
+							formatter.format(sbformat.toString(),
+									(Object[]) row);
+
+							sb.append(formatter.toString());
+							if (i == 0)
+								sb.append(print(des_head)); // print the head
+						}
+
+						// end
+						sb.append(print(des_bottom));
+						return sb;
+					}
+
+					private StringBuilder print(String[] fillChars) {
+						StringBuilder sb = new StringBuilder();
+						// first column
+						sb.append(fillChars[0]);
+						for (int i = 0; i < colLengths[0]
+								- fillChars[0].length() + 1; i++) {
+							sb.append(fillChars[2]);
+						}
+						sb.append(fillChars[3]);
+
+						// last column
+						for (int i = 0; i < colLengths[1]
+								- fillChars[1].length() + 1; i++) {
+							sb.append(fillChars[2]);
+						}
+						sb.append(fillChars[1]);
+						sb.append("\n");
+						return sb;
+					}
+
+					public boolean isTableEmpty() {
+						if (list.size() > 1)
+							return false;
+						return true;
+					}
+				}
+				Util_tLogRow_4 util_tLogRow_4 = new Util_tLogRow_4();
+				util_tLogRow_4.setTableName("tLogRow_4");
+				util_tLogRow_4.addRow(new String[] { "Column0", "Column1", });
+				StringBuilder strBuffer_tLogRow_4 = null;
+				int nb_line_tLogRow_4 = 0;
+				// /////////////////////
+
+				/**
+				 * [tLogRow_4 begin ] stop
+				 */
+
+				/**
+				 * [tFileInputDelimited_4 begin ] start
+				 */
+
+				ok_Hash.put("tFileInputDelimited_4", false);
+				start_Hash.put("tFileInputDelimited_4",
+						System.currentTimeMillis());
+
+				currentComponent = "tFileInputDelimited_4";
+
+				int tos_count_tFileInputDelimited_4 = 0;
+
+				final routines.system.RowState rowstate_tFileInputDelimited_4 = new routines.system.RowState();
+
+				int nb_line_tFileInputDelimited_4 = 0;
+				org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_4 = null;
+				try {
+
+					Object filename_tFileInputDelimited_4 = "C:/Users/gogada.vardhan/Desktop/test.txt";
+					if (filename_tFileInputDelimited_4 instanceof java.io.InputStream) {
+
+						int footer_value_tFileInputDelimited_4 = 0, random_value_tFileInputDelimited_4 = -1;
+						if (footer_value_tFileInputDelimited_4 > 0
+								|| random_value_tFileInputDelimited_4 > 0) {
+							throw new java.lang.Exception(
+									"When the input source is a stream,footer and random shouldn't be bigger than 0.");
+						}
+
+					}
+					try {
+						fid_tFileInputDelimited_4 = new org.talend.fileprocess.FileInputDelimited(
+								"C:/Users/gogada.vardhan/Desktop/test.txt",
+								"ISO-8859-15", ",", "\n", true, 1, 0, -1, -1,
+								false);
+					} catch (java.lang.Exception e) {
+
+						System.err.println(e.getMessage());
+
+					}
+
+					while (fid_tFileInputDelimited_4 != null
+							&& fid_tFileInputDelimited_4.nextRecord()) {
+						rowstate_tFileInputDelimited_4.reset();
+
+						row4 = null;
+
+						boolean whetherReject_tFileInputDelimited_4 = false;
+						row4 = new row4Struct();
+						try {
+
+							int columnIndexWithD_tFileInputDelimited_4 = 0;
+
+							String temp = "";
+
+							columnIndexWithD_tFileInputDelimited_4 = 0;
+
+							row4.Column0 = fid_tFileInputDelimited_4
+									.get(columnIndexWithD_tFileInputDelimited_4);
+
+							columnIndexWithD_tFileInputDelimited_4 = 1;
+
+							temp = fid_tFileInputDelimited_4
+									.get(columnIndexWithD_tFileInputDelimited_4);
+							if (temp.length() > 0) {
+
+								try {
+
+									row4.Column1 = ParserUtils
+											.parseTo_Integer(temp);
+
+								} catch (java.lang.Exception ex_tFileInputDelimited_4) {
+									rowstate_tFileInputDelimited_4
+											.setException(new RuntimeException(
+													String.format(
+															"Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+															"Column1", "row4",
+															temp,
+															ex_tFileInputDelimited_4),
+													ex_tFileInputDelimited_4));
+								}
+
+							} else {
+
+								row4.Column1 = null;
+
+							}
+
+							if (rowstate_tFileInputDelimited_4.getException() != null) {
+								throw rowstate_tFileInputDelimited_4
+										.getException();
+							}
+
+						} catch (java.lang.Exception e) {
+							whetherReject_tFileInputDelimited_4 = true;
+
+							System.err.println(e.getMessage());
+							row4 = null;
+
+						}
+
+						/**
+						 * [tFileInputDelimited_4 begin ] stop
+						 */
+
+						/**
+						 * [tFileInputDelimited_4 main ] start
+						 */
+
+						currentComponent = "tFileInputDelimited_4";
+
+						tos_count_tFileInputDelimited_4++;
+
+						/**
+						 * [tFileInputDelimited_4 main ] stop
+						 */
+
+						/**
+						 * [tFileInputDelimited_4 process_data_begin ] start
+						 */
+
+						currentComponent = "tFileInputDelimited_4";
+
+						/**
+						 * [tFileInputDelimited_4 process_data_begin ] stop
+						 */
+						// Start of branch "row4"
+						if (row4 != null) {
+
+							/**
+							 * [tLogRow_4 main ] start
+							 */
+
+							currentComponent = "tLogRow_4";
+
+							// row4
+							// row4
+
+							if (execStat) {
+								runStat.updateStatOnConnection("row4"
+										+ iterateId, 1, 1);
+							}
+
+							// /////////////////////
+
+							String[] row_tLogRow_4 = new String[2];
+
+							if (row4.Column0 != null) { //
+								row_tLogRow_4[0] = String.valueOf(row4.Column0);
+
+							} //
+
+							if (row4.Column1 != null) { //
+								row_tLogRow_4[1] = String.valueOf(row4.Column1);
+
+							} //
+
+							util_tLogRow_4.addRow(row_tLogRow_4);
+							nb_line_tLogRow_4++;
+							// ////
+
+							// ////
+
+							// /////////////////////
+
+							tos_count_tLogRow_4++;
+
+							/**
+							 * [tLogRow_4 main ] stop
+							 */
+
+							/**
+							 * [tLogRow_4 process_data_begin ] start
+							 */
+
+							currentComponent = "tLogRow_4";
+
+							/**
+							 * [tLogRow_4 process_data_begin ] stop
+							 */
+
+							/**
+							 * [tLogRow_4 process_data_end ] start
+							 */
+
+							currentComponent = "tLogRow_4";
+
+							/**
+							 * [tLogRow_4 process_data_end ] stop
+							 */
+
+						} // End of branch "row4"
+
+						/**
+						 * [tFileInputDelimited_4 process_data_end ] start
+						 */
+
+						currentComponent = "tFileInputDelimited_4";
+
+						/**
+						 * [tFileInputDelimited_4 process_data_end ] stop
+						 */
+
+						/**
+						 * [tFileInputDelimited_4 end ] start
+						 */
+
+						currentComponent = "tFileInputDelimited_4";
+
+					}
+				} finally {
+					if (!((Object) ("C:/Users/gogada.vardhan/Desktop/test.txt") instanceof java.io.InputStream)) {
+						if (fid_tFileInputDelimited_4 != null) {
+							fid_tFileInputDelimited_4.close();
+						}
+					}
+					if (fid_tFileInputDelimited_4 != null) {
+						globalMap.put("tFileInputDelimited_4_NB_LINE",
+								fid_tFileInputDelimited_4.getRowNumber());
+
+					}
+				}
+
+				ok_Hash.put("tFileInputDelimited_4", true);
+				end_Hash.put("tFileInputDelimited_4",
+						System.currentTimeMillis());
+
+				/**
+				 * [tFileInputDelimited_4 end ] stop
+				 */
+
+				/**
+				 * [tLogRow_4 end ] start
+				 */
+
+				currentComponent = "tLogRow_4";
+
+				// ////
+
+				java.io.PrintStream consoleOut_tLogRow_4 = null;
+				if (globalMap.get("tLogRow_CONSOLE") != null) {
+					consoleOut_tLogRow_4 = (java.io.PrintStream) globalMap
+							.get("tLogRow_CONSOLE");
+				} else {
+					consoleOut_tLogRow_4 = new java.io.PrintStream(
+							new java.io.BufferedOutputStream(System.out));
+					globalMap.put("tLogRow_CONSOLE", consoleOut_tLogRow_4);
+				}
+
+				consoleOut_tLogRow_4
+						.println(util_tLogRow_4.format().toString());
+				consoleOut_tLogRow_4.flush();
+				// ////
+				globalMap.put("tLogRow_4_NB_LINE", nb_line_tLogRow_4);
+
+				// /////////////////////
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null
+							|| !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row4" + iterateId, 2, 0);
+					}
+				}
+
+				ok_Hash.put("tLogRow_4", true);
+				end_Hash.put("tLogRow_4", System.currentTimeMillis());
+
+				/**
+				 * [tLogRow_4 end ] stop
+				 */
+
+			}// end the resume
+
+		} catch (java.lang.Exception e) {
+
+			TalendException te = new TalendException(e, currentComponent,
+					globalMap);
+
+			throw te;
+		} catch (java.lang.Error error) {
+
+			runStat.stopThreadStat();
+
+			throw error;
+		} finally {
+
+			try {
+
+				/**
+				 * [tFileInputDelimited_4 finally ] start
+				 */
+
+				currentComponent = "tFileInputDelimited_4";
+
+				/**
+				 * [tFileInputDelimited_4 finally ] stop
+				 */
+
+				/**
+				 * [tLogRow_4 finally ] start
+				 */
+
+				currentComponent = "tLogRow_4";
+
+				/**
+				 * [tLogRow_4 finally ] stop
+				 */
+
+			} catch (java.lang.Exception e) {
+				// ignore
+			} catch (java.lang.Error error) {
+				// ignore
+			}
+			resourceMap = null;
+		}
+
+		globalMap.put("tFileInputDelimited_4_SUBPROCESS_STATE", 1);
+	}
+
 	public String resuming_logs_dir_path = null;
 	public String resuming_checkpoint_path = null;
 	public String parent_part_launcher = null;
@@ -2540,6 +3220,18 @@ public class harsha_first implements TalendJob {
 			e_tFileInputDelimited_3.printStackTrace();
 
 		}
+		try {
+			errorCode = null;
+			tFileInputDelimited_4Process(globalMap);
+			if (!"failure".equals(status)) {
+				status = "end";
+			}
+		} catch (TalendException e_tFileInputDelimited_4) {
+			globalMap.put("tFileInputDelimited_4_SUBPROCESS_STATE", -1);
+
+			e_tFileInputDelimited_4.printStackTrace();
+
+		}
 
 		this.globalResumeTicket = true;// to run tPostJob
 
@@ -2696,6 +3388,6 @@ public class harsha_first implements TalendJob {
 	ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- * 77378 characters generated by Talend Open Studio for Data Integration on the
- * 30 March, 2022 3:43:54 PM IST
+ * 96382 characters generated by Talend Open Studio for Data Integration on the
+ * 30 March, 2022 3:49:39 PM IST
  ************************************************************************************************/
