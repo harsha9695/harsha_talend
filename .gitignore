@@ -7,7 +7,35 @@ HARSHA_TALEND/metadata/
 temp/
 sqlPatterns/
 .settings
-poms/
 HARSHA_TALEND/talend.project
 HARSHA_TALEND/.project
+
+#!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/java/harsha_talend/*
+
+
+
+#worked
+#HARSHA_TALEND/poms/*
+#!HARSHA_TALEND/poms/jobs/
+
+
+#didn't work
+#HARSHA_TALEND/poms/*
+#!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/
+
+
+HARSHA_TALEND/poms/*
+!HARSHA_TALEND/poms/jobs/
+!HARSHA_TALEND/poms/jobs/process/
+HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/*
+!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/
+HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/*
+!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/
+HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/*
+!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/java/
+HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/java/*
+!HARSHA_TALEND/poms/jobs/process/harsha_first_0.1/src/main/java/harsha_talend/
+
+
+
 
